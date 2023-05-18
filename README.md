@@ -289,3 +289,9 @@ like [tailwind-ts](https://github.com/mathieutu/tailwind-ts).
 # License
 
 MIT
+
+# Acknowledgement
+
+Thanks to @fgnass for this library :)
+
+- https://github.com/fgnass/classname-variants
