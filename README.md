@@ -7,9 +7,9 @@ The library is framework-agnostic and can be used with any kind of CSS flavor.
 
 It is especially useful though if used with
 [Tailwind](https://tailwindcss.com/) or [CSS
-Modules](https://github.com/css-modules/css-modules) in combination with React,
-as it provides some [dedicated helpers](#React) and even allows for a
-_styled-components_ like API, but with [class names instead of
+Modules](https://github.com/css-modules/css-modules) in combination with
+SolidJs, as it provides some [dedicated helpers](#SolidJs) and even allows for
+a _styled-components_ like API, but with [class names instead of
 styles](#bonus-styled-components-but-with-class-names-)!
 
 # Basics
@@ -114,9 +114,9 @@ const button = variants({
 });
 ```
 
-# React
+# SolidJS
 
-The library contains utility functions that are useful for writing React
+The library contains utility functions that are useful for writing SolidJS
 components.
 
 It works much like `variants()` but instead of a class name string, the
@@ -204,7 +204,7 @@ const Button = styled("button", {
 ```
 
 > **Note**
-> You can also style other custom React components as long as they accept a
+> You can also style other custom SolidJS components as long as they accept a
 > `class` prop.
 
 ## Styled components without variants
