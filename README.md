@@ -1,18 +1,24 @@
 # classname-variants
 
-Stitches-like [variant API](https://stitches.dev/docs/variants) for plain class names.
+Stitches-like [variant API](https://stitches.dev/docs/variants) for plain class
+names.
 
 The library is framework-agnostic and can be used with any kind of CSS flavor.
 
-It is especially useful though if used with [Tailwind](https://tailwindcss.com/) or [CSS Modules](https://github.com/css-modules/css-modules) in combination with React, as it provides some [dedicated helpers](#React) and even allows for a _styled-components_ like API, but with [class names instead of styles](#bonus-styled-components-but-with-class-names-)!
-
-[![Edit classname-variants/react](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/s/classname-variants-react-3bzjl?fontsize=14&hidenavigation=1&theme=dark)
+It is especially useful though if used with
+[Tailwind](https://tailwindcss.com/) or [CSS
+Modules](https://github.com/css-modules/css-modules) in combination with React,
+as it provides some [dedicated helpers](#React) and even allows for a
+_styled-components_ like API, but with [class names instead of
+styles](#bonus-styled-components-but-with-class-names-)!
 
 # Basics
 
-Let's assume we want to build a button component with Tailwind CSS that comes in different sizes and colors.
+Let's assume we want to build a button component with Tailwind CSS that comes
+in different sizes and colors.
 
-It consists of some _base classes_ that are always present as well as some optional classes that need to be added depending on the desired _variants_.
+It consists of some _base classes_ that are always present as well as some
+optional classes that need to be added depending on the desired _variants_.
 
 ```tsx
 const button = variants({
@@ -30,7 +36,9 @@ const button = variants({
 });
 ```
 
-The result is a function that expects an object which specifies what variants should be selected. When called, it returns a string containing the respective class names:
+The result is a function that expects an object which specifies what variants
+should be selected. When called, it returns a string containing the respective
+class names:
 
 ```ts
 document.write(`
@@ -62,7 +70,8 @@ const button = variants({
 
 ## Compound variants
 
-The `compoundVariants` option can be used to apply class names based on a combination of other variants.
+The `compoundVariants` option can be used to apply class names based on a
+combination of other variants.
 
 ```tsx
 const button = variants({
@@ -81,7 +90,7 @@ const button = variants({
         color: "accent",
         outlined: true,
       },
-      className: "border-teal-500",
+      class: "border-teal-500",
     },
   ],
 });
@@ -107,9 +116,11 @@ const button = variants({
 
 # React
 
-The library contains utility functions that are useful for writing React components.
+The library contains utility functions that are useful for writing React
+components.
 
-It works much like `variants()` but instead of a class name string, the resulting function returns an object with props.
+It works much like `variants()` but instead of a class name string, the
+resulting function returns an object with props.
 
 ```ts
 import { variantProps } from "classname-variants/react";
@@ -135,7 +146,9 @@ const buttonProps = variantProps({
 });
 ```
 
-This way a component's props (or part of them) can be directly spread into the target element. All variant-related props are used to construct the `className` property while all other props are passed through verbatim:
+This way a component's props (or part of them) can be directly spread into the
+target element. All variant-related props are used to construct the `class`
+property while all other props are passed through verbatim:
 
 ```tsx
 type Props = JSX.IntrinsicElements["button"] &
@@ -156,7 +169,9 @@ function App() {
 
 # Bonus: styled-components, but for static CSS 💅
 
-Things can be taken even a step further, resulting in a _styled-components_ like way of defining reusable components. Under the hood, this does basically the same as the example above, but also handles _refs_ correctly:
+Things can be taken even a step further, resulting in a _styled-components_
+like way of defining reusable components. Under the hood, this does basically
+the same as the example above, but also handles _refs_ correctly:
 
 ```ts
 import { styled, tw } from "classname-variants/react";
@@ -171,7 +186,8 @@ const Button = styled("button", {
 });
 ```
 
-Again, this is not limited to tailwind, so you could do the same with CSS modules:
+Again, this is not limited to tailwind, so you could do the same with CSS
+modules:
 
 ```ts
 import { styled } from "classname-variants/react";
@@ -188,14 +204,16 @@ const Button = styled("button", {
 ```
 
 > **Note**
-> You can also style other custom React components as long as they accept a `className` prop.
+> You can also style other custom React components as long as they accept a
+> `class` prop.
 
 ## Styled components without variants
 
-You can also use the `styled` function to create styled components without any variants at all:
+You can also use the `styled` function to create styled components without any
+variants at all:
 
 ```ts
-import { styled } from "classname-variants/react";
+import { styled } from "classname-variants/solid";
 
 const Button = styled(
   "button",
@@ -205,10 +223,12 @@ const Button = styled(
 
 ## Polymorphic components with "as"
 
-If you want to keep all the variants you have defined for a component but want to render a different HTML tag or a different custom component, you can use the "as" prop to do so:
+If you want to keep all the variants you have defined for a component but want
+to render a different HTML tag or a different custom component, you can use the
+"as" prop to do so:
 
 ```tsx
-import { styled } from "classname-variants/react";
+import { styled } from "classname-variants/solid";
 
 const Button = styled("button", {
   variants: {
@@ -230,7 +250,12 @@ function App() {
 
 # Tailwind IntelliSense
 
-In order to get auto-completion for the CSS classes themselves, you can use the [Tailwind CSS IntelliSense](https://github.com/tailwindlabs/tailwindcss-intellisense) plugin for VS Code. In order to make it recognize the strings inside your variants-config, you have to somehow mark them and configure the plugin accordingly.
+In order to get auto-completion for the CSS classes themselves, you can use the
+[Tailwind CSS
+IntelliSense](https://github.com/tailwindlabs/tailwindcss-intellisense) plugin
+for VS Code. In order to make it recognize the strings inside your
+variants-config, you have to somehow mark them and configure the plugin
+accordingly.
 
 One way of doing so is by using tagged template literals:
 
@@ -255,9 +280,11 @@ You can then add the following line to your `settings.json`:
 ```
 
 > **Note**
-> The `tw` helper function is just an alias for [`String.raw`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/raw).
+> The `tw` helper function is just an alias for
+> [`String.raw`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/raw).
 
-In order to get type coverage even for your Tailwind classes you can use a tool like [tailwind-ts](https://github.com/mathieutu/tailwind-ts).
+In order to get type coverage even for your Tailwind classes you can use a tool
+like [tailwind-ts](https://github.com/mathieutu/tailwind-ts).
 
 # License
 

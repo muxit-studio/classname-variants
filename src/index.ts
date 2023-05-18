@@ -29,7 +29,7 @@ export interface VariantsConfig<V extends Variants = {}> {
  */
 export interface CompoundVariant<V extends Variants> {
   variants: Partial<OptionsOf<V>>;
-  className: string;
+  class: string;
 }
 
 /**
@@ -155,10 +155,11 @@ export function variants<
       if (selected !== undefined) res.push(variants[name]?.[selected]);
     }
 
-    for (let { variants, className } of compoundVariants ?? []) {
-      const isSelected = (name: string) => getSelected(name) === variants[name];
+    for (let cv of compoundVariants ?? []) {
+      const isSelected = (name: string) =>
+        getSelected(name) === cv.variants[name];
       if (Object.keys(variants).every(isSelected)) {
-        res.push(className);
+        res.push(cv.class);
       }
     }
     return res.filter(Boolean).join(" ");

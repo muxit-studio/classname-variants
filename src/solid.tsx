@@ -1,19 +1,13 @@
-import {
-  ComponentProps,
-  createElement,
-  ElementType,
-  forwardRef,
-  ReactElement,
-  Ref,
-} from "react";
-
+import { ComponentProps, JSX, ValidComponent } from "solid-js";
 import {
   Variants,
   variants,
   VariantsConfig,
   VariantOptions,
   Simplify,
-} from "./index.js";
+} from "./index";
+
+import { Dynamic } from "solid-js/web";
 
 /**
  * Utility type to infer the first argument of a variantProps function.
@@ -21,12 +15,12 @@ import {
 export type VariantPropsOf<T> = T extends (props: infer P) => any ? P : never;
 
 /**
- * Type for the variantProps() argument – consists of the VariantOptions and an optional className for chaining.
+ * Type for the variantProps() argument – consists of the VariantOptions and an optional class for chaining.
  */
 type VariantProps<
   C extends VariantsConfig<V>,
   V extends Variants = C["variants"]
-> = VariantOptions<C> & { className?: string };
+> = VariantOptions<C> & { class?: string };
 
 export function variantProps<
   C extends VariantsConfig<V>,
@@ -43,26 +37,26 @@ export function variantProps<
       }
     }
 
-    // Add the optionally passed className prop for chaining
-    result.className = [props.className, variantClassName(props)]
+    // Add the optionally passed class prop for chaining
+    result.class = [props.class, variantClassName(props)]
       .filter(Boolean)
       .join(" ");
 
-    return result as { className: string } & Omit<P, keyof C["variants"]>;
+    return result as { class: string } & Omit<P, keyof C["variants"]>;
   };
 }
 
 type VariantsOf<T, V> = T extends VariantsConfig ? V : {};
 
-type AsProps<T extends ElementType = ElementType> = {
+type AsProps<T extends ValidComponent = ValidComponent> = {
   as?: T;
 };
 
-type PolymorphicComponentProps<T extends ElementType> = AsProps<T> &
+type PolymorphicComponentProps<T extends ValidComponent> = AsProps<T> &
   Omit<ComponentProps<T>, "as">;
 
 export function styled<
-  T extends ElementType,
+  T extends ValidComponent,
   C extends VariantsConfig<V>,
   V extends Variants = VariantsOf<C, C["variants"]>
 >(type: T, config: string | Simplify<C>) {
@@ -71,13 +65,12 @@ export function styled<
       ? variantProps({ base: config, variants: {} })
       : variantProps(config);
 
-  const Component: <As extends ElementType = T>(
+  const Component: <As extends ValidComponent = T>(
     props: PolymorphicComponentProps<As> & VariantOptions<C>
-  ) => ReactElement | null = forwardRef(
-    ({ as, ...props }: AsProps, ref: Ref<Element>) => {
-      return createElement(as ?? type, { ...styledProps(props), ref });
-    }
-  );
+  ) => JSX.Element = ({ as, ...props }: AsProps) => {
+    return <Dynamic component={as ?? type} {...styledProps(props)} />;
+  };
+
   return Component;
 }
 

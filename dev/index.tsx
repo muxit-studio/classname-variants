@@ -1,18 +1,26 @@
-import React from "react";
-import ReactDOM from "react-dom";
-import { styled } from "./react";
+import { render } from "solid-js/web";
+import { VariantPropsOf, styled } from "../src/solid";
+import { Component, JSX } from "solid-js";
 
-function CustomComponent({
-  title,
-  ...props
-}: {
-  className?: string;
+type Props = {
   title: string;
-}) {
-  return <div {...props}>{title}</div>;
-}
+};
+const CustomComponent: Component<Props> = (props) => {
+  return <div {...props}>{props.title}</div>;
+};
 
-const Card = styled("div", "bg-white p-4 border-2 rounded-lg");
+const Card = styled("div", {
+  base: "bg-white p-4 border-2 rounded-lg",
+  variants: {
+    color: {
+      red: "border-red-500",
+      false: "",
+    },
+  },
+  defaultVariants: {
+    color: "false",
+  },
+});
 
 const TitleCard = styled(CustomComponent, "bg-white p-4 border-2 rounded-lg");
 
@@ -34,7 +42,7 @@ const Button = styled("button", {
   compoundVariants: [
     {
       variants: { color: "accent", outlined: true },
-      className: "border-teal-600",
+      class: "border-teal-600",
     },
   ],
   defaultVariants: {
@@ -53,7 +61,7 @@ export const ExpectErrors = styled("div", {
     {
       //@ts-expect-error
       variants: { outlined: true },
-      className: "",
+      class: "",
     },
   ],
   defaultVariants: {
@@ -82,9 +90,39 @@ export function WithErrors() {
   );
 }
 
-function App() {
+import { variantProps } from "../src/solid";
+
+const buttonProps = variantProps({
+  base: "rounded-md text-white",
+  variants: {
+    color: {
+      brand: "bg-sky-500",
+      accent: "bg-teal-500",
+    },
+    size: {
+      small: "px-5 py-3 text-xs",
+      large: "px-6 py-4 text-base",
+    },
+    rounded: {
+      true: "rounded-full",
+    },
+  },
+  defaultVariants: {
+    color: "brand",
+  },
+});
+
+type PropsX = JSX.IntrinsicElements["button"] &
+  VariantPropsOf<typeof buttonProps>;
+
+function ButtonX(props: PropsX) {
+  return <button {...buttonProps(props)} />;
+}
+
+const App = () => {
   return (
-    <div className="flex justify-center items-center pt-8 gap-4 flex-wrap">
+    <div class="flex justify-center items-center pt-8 gap-4 flex-wrap">
+      <h1>Tailwind Variants</h1>
       <Button onClick={console.log}>Accent</Button>
       <Button rounded>Neutral + Rounded</Button>
       <Button color="accent" outlined>
@@ -101,8 +139,16 @@ function App() {
       <Card as="a" href="https://example.com">
         Link
       </Card>
+      <ButtonX size="small" color="accent" onClick={console.log}>
+        Click Me!
+      </ButtonX>
     </div>
   );
+};
+
+const elem = document.getElementById("app");
+if (!elem) {
+  throw new Error("No element with id 'app' found");
 }
 
-ReactDOM.render(<App />, document.getElementById("root"));
+render(() => <App />, elem);
