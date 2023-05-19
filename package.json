@@ -1,5 +1,5 @@
 {
-  "name": "classname-variants",
+  "name": "@muxit-studio/classname-variants",
   "version": "1.3.3",
   "private": false,
   "description": "Variant API for plain class names, with solidjs support",

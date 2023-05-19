@@ -123,7 +123,7 @@ It works much like `variants()` but instead of a class name string, the
 resulting function returns an object with props.
 
 ```ts
-import { variantProps } from "classname-variants/react";
+import { variantProps } from "classname-variants/solid";
 
 const buttonProps = variantProps({
   base: "rounded-md text-white",
@@ -174,7 +174,7 @@ like way of defining reusable components. Under the hood, this does basically
 the same as the example above, but also handles _refs_ correctly:
 
 ```ts
-import { styled, tw } from "classname-variants/react";
+import { styled, tw } from "classname-variants/solid";
 
 const Button = styled("button", {
   variants: {
@@ -190,7 +190,7 @@ Again, this is not limited to tailwind, so you could do the same with CSS
 modules:
 
 ```ts
-import { styled } from "classname-variants/react";
+import { styled } from "classname-variants/solid";
 import styles from "./styles.module.css";
 
 const Button = styled("button", {
