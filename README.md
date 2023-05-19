@@ -123,7 +123,7 @@ It works much like `variants()` but instead of a class name string, the
 resulting function returns an object with props.
 
 ```ts
-import { variantProps } from "classname-variants/solid";
+import { variantProps } from "@muxit-studio/classname-variants/solid";
 
 const buttonProps = variantProps({
   base: "rounded-md text-white",
@@ -174,7 +174,7 @@ like way of defining reusable components. Under the hood, this does basically
 the same as the example above, but also handles _refs_ correctly:
 
 ```ts
-import { styled, tw } from "classname-variants/solid";
+import { styled, tw } from "@muxit-studio/classname-variants/solid";
 
 const Button = styled("button", {
   variants: {
@@ -190,7 +190,7 @@ Again, this is not limited to tailwind, so you could do the same with CSS
 modules:
 
 ```ts
-import { styled } from "classname-variants/solid";
+import { styled } from "@muxit-studio/classname-variants/solid";
 import styles from "./styles.module.css";
 
 const Button = styled("button", {
@@ -213,7 +213,7 @@ You can also use the `styled` function to create styled components without any
 variants at all:
 
 ```ts
-import { styled } from "classname-variants/solid";
+import { styled } from "@muxit-studio/classname-variants/solid";
 
 const Button = styled(
   "button",
@@ -228,7 +228,7 @@ to render a different HTML tag or a different custom component, you can use the
 "as" prop to do so:
 
 ```tsx
-import { styled } from "classname-variants/solid";
+import { styled } from "@muxit-studio/classname-variants/solid";
 
 const Button = styled("button", {
   variants: {
@@ -260,7 +260,7 @@ accordingly.
 One way of doing so is by using tagged template literals:
 
 ```ts
-import { variants, tw } from "classname-variants";
+import { variants, tw } from "@muxit-studio/classname-variants";
 
 const button = variants({
   base: tw`px-5 py-2 text-white`,
