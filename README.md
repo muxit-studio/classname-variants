@@ -248,6 +248,22 @@ function App() {
 }
 ```
 
+# `cn`
+
+The cn method is a utility function introduced to help clean up CSS class names
+that are expressed as template literals. As class names are often dynamically
+generated or manipulated, this can sometimes lead to unwanted white spaces,
+empty class names, or even boolean and null values being injected into your
+class strings. This function is designed to prevent these issues and ensure
+that only valid CSS class names are returned.
+
+```tsx
+import { cn } from "@muxit-studio/classname-variants"; // or "@muxit-studio/classname-variants/solid"
+let template = `   myClass1  myClass2  false  null   `;
+let cleanedClassNames = cn(template);
+// cleanedClassNames will now be 'myClass1 myClass2'
+```
+
 # Tailwind IntelliSense
 
 In order to get auto-completion for the CSS classes themselves, you can use the

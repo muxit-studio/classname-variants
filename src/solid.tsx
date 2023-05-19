@@ -73,3 +73,26 @@ export function styled<
 
   return Component;
 }
+
+/**
+ * No-op function to mark template literals as tailwind strings.
+ */
+export const tw = String.raw;
+
+/**
+ * cn trims and removes empty classnames from a template literal.
+ */
+export const cn = (template: string) => {
+  const trimmedClassnames = template.replace(/\s+/gmu, " ");
+  return trimmedClassnames
+    .split(" ")
+    .filter(
+      (className) =>
+        className !== "false" &&
+        className !== "true" &&
+        className !== "undefined" &&
+        className !== "null"
+    )
+    .join(" ")
+    .trim();
+};
